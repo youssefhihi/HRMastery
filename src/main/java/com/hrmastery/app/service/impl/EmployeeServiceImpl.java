@@ -6,6 +6,10 @@ import com.hrmastery.app.repository.impl.EmployeeRepoImpl;
 import com.hrmastery.app.repository.inerfaces.EmployeeRepo;
 import com.hrmastery.app.service.interfaces.EmployeeService;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepo employeeRepo = new EmployeeRepoImpl();
@@ -20,8 +24,34 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (RepoException e) {
             throw new RepoException(e.getMessage());
         }
-        return "SERDFTGHJK";
+        return null;
     }
 
+    @Override
+    public String updateEmployee(Employee employee) throws RepoException {
+        try {
+           Boolean isUpdated = employeeRepo.update(employee);
+           if (isUpdated) {
+               return "Employee updated successfully";
+           }
+        } catch (RepoException e) {
+            throw new RepoException(e.getMessage());
+        }
+        return null;
+    }
 
+    @Override
+    public List<Employee> getAllEmployees() throws RepoException {
+        return employeeRepo.findAll();
+    }
+
+    @Override
+    public Employee getEmployee(UUID employeeId) throws RepoException {
+        Optional<Employee> employee = employeeRepo.findById(employeeId);
+        if (employee.isPresent()) {
+            return employee.get();
+        }else {
+            throw new RepoException("Employee not found");
+        }
+    }
 }
