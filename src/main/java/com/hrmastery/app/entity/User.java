@@ -2,17 +2,16 @@ package com.hrmastery.app.entity;
 
 import com.hrmastery.app.enums.Role;
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
 
 @Entity
 @Table(name = "users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @UuidGenerator
     private UUID id;
 
     @Column(name = "name", nullable = false)
@@ -26,17 +25,19 @@ public class User {
 
     @Column(name = "address")
     private String address;
+    @Column(name="phoneNumber", nullable = false)
+    private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
 
 
-    public User(String name, String email, String password, String address, Role role) {
+    public User(String name, String email, String address,String phoneNumber, Role role) {
         this.name = name;
         this.email = email;
-        this.password = password;
         this.address = address;
+        this.phoneNumber = phoneNumber;
         this.role = role;
     }
     public User() {}
@@ -47,6 +48,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public UUID getId() {
