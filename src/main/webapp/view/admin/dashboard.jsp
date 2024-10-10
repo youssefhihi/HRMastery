@@ -70,7 +70,6 @@
                     <div class="col col-5" data-label="post">${employee.getJobPosition()}</div>
                     <div class="col col-5 operations" data-label="operations">
                         <form class="deleteForm" action="${pageContext.request.contextPath}/employees" method="post" onsubmit="return confirm('Are you sure you want to delete this employee?')">
-                            <input type="hidden" name="method" value="delete" />
                             <input type="hidden" name="id" value="${employee.getId()}" />
                             <button type="submit" class="delete-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">

@@ -44,6 +44,9 @@ public class EmployeeServlet extends HttpServlet {
             case "/employees/update":
                 updateEmployee(req, res);
                 break;
+            case "/employees":
+                deleteEmployee(req, res);
+                break;
             default:
                 break;
         }
@@ -120,6 +123,21 @@ public class EmployeeServlet extends HttpServlet {
                 success =  employeeService.updateEmployee(employee);
                 req.setAttribute("success", success);
             }
+        } catch (RepoException e) {
+            errors.add(e.getMessage());
+        }
+        req.setAttribute("errors", errors);
+        getEmployees(req,res);
+    }
+
+
+
+    private void deleteEmployee(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        List<String> errors = new ArrayList<>();
+        String success ;
+        try {
+            success =  employeeService.deleteEmployee(UUID.fromString(req.getParameter("id")));
+            req.setAttribute("success", success);
         } catch (RepoException e) {
             errors.add(e.getMessage());
         }

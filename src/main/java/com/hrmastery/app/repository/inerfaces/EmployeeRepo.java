@@ -10,6 +10,7 @@ import java.util.UUID;
 public interface EmployeeRepo {
 
     Boolean create(Employee Employee) throws RepoException;
+    Boolean delete(UUID id) throws RepoException;
     Boolean update(Employee employee) throws RepoException;
     List<Employee> findAll() throws RepoException;
     Optional<Employee> findById(UUID id) throws RepoException;

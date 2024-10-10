@@ -54,4 +54,18 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new RepoException("Employee not found");
         }
     }
+
+
+    @Override
+    public String deleteEmployee(UUID employeeId) throws RepoException {
+        try{
+            Boolean isAdded =  employeeRepo.delete(employeeId);
+            if(isAdded) {
+                return "Employee deleted successfully";
+            }
+        }catch (RepoException e) {
+            throw new RepoException(e.getMessage());
+        }
+        return null;
+    }
 }

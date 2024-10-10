@@ -2,7 +2,6 @@ package com.hrmastery.app.entity;
 
 import com.hrmastery.app.enums.Role;
 import jakarta.persistence.*;
-import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
