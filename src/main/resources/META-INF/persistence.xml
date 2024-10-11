@@ -5,16 +5,19 @@
              version="3.0">
     <persistence-unit name="myPersistenceUnit">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
+        <class>com.hrmastery.app.entity.User</class>
+        <class>com.hrmastery.app.entity.Admin</class>
+        <class>com.hrmastery.app.entity.Recruitment</class>
+        <class>com.hrmastery.app.entity.Employee</class>
+        <class>com.hrmastery.app.entity.Application</class>
+        <class>com.hrmastery.app.entity.HistoryUpdate</class>
+        <class>com.hrmastery.app.entity.LeaveRequest</class>
 
         <properties>
-            <!-- Database connection settings -->
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/HRMastery"/>
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
             <property name="jakarta.persistence.jdbc.password" value="password"/>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-
-            <!-- Hibernate properties -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.show_sql" value="true"/>

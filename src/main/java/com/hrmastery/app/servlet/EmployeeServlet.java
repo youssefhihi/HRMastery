@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.hrmastery.app.Exceptions.RepoException;
-import com.hrmastery.app.Utils.JMailler.Validation.EmployeeValidation;
+import com.hrmastery.app.Utils.Validation.EmployeeValidation;
 import com.hrmastery.app.entity.Employee;
 import com.hrmastery.app.enums.Role;
 import com.hrmastery.app.service.impl.EmployeeServiceImpl;
@@ -64,7 +64,7 @@ public class EmployeeServlet extends HttpServlet {
         } catch (ParseException e) {
             errors.add(e.getMessage());
         }
-        Employee employee = new Employee(
+            Employee employee = new Employee(
                 req.getParameter("name"),
                 req.getParameter("email"),
                 req.getParameter("address"),
@@ -75,7 +75,8 @@ public class EmployeeServlet extends HttpServlet {
                 req.getParameter("jobPosition"),
                 hireDate,
                 req.getParameter("cnss"),
-                req.getParameter("department")
+                req.getParameter("department"),
+                Integer.parseInt(req.getParameter("leaveBalance"))
         );
         employee.setPassword("1234567890");
         try {
@@ -113,7 +114,9 @@ public class EmployeeServlet extends HttpServlet {
                 req.getParameter("jobPosition"),
                 hireDate,
                 req.getParameter("cnss"),
-                req.getParameter("department")
+                req.getParameter("department"),
+                Integer.parseInt(req.getParameter("leaveBalance"))
+
         );
         employee.setId(UUID.fromString(req.getParameter("id")));
         employee.setPassword("1234567890");
