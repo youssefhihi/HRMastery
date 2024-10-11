@@ -1,5 +1,6 @@
 package com.hrmastery.app.servlet;
 
+import com.hrmastery.app.Exceptions.RepoException;
 import com.hrmastery.app.Utils.Validation.LeaveRequestValidation;
 import com.hrmastery.app.entity.Employee;
 import com.hrmastery.app.entity.LeaveRequest;
@@ -29,7 +30,7 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "leaveRequestServlet", value = {"/leaveRequests", "/leaveRequest/add","/leaveRequests/pending"})
+@WebServlet(name = "leaveRequestServlet", value = {"/leaveRequests", "/leaveRequest/demand","/LeaveRequest/updateStatus","/leaveRequest/add"})
 @MultipartConfig
 public class LeaveRequestServlet extends HttpServlet {
     LeaveRequestService leaveRequestService;
@@ -45,12 +46,12 @@ public class LeaveRequestServlet extends HttpServlet {
         String action = req.getServletPath();
 
         switch (action) {
-            case "/leaveRequests/pending":
-                penidngLeaveRequest(req, res);
+            case "/leaveRequests":
+                leaveRequest(req, res);
                 break;
             case "/leaveRequest/update":
                 break;
-            case "/leaveRequests":
+            case "/leaveRequest/demand":
                Employee employee = employeeService.getEmployee(UUID.fromString("b0477412-ee2c-445c-a2a1-aa339b0bb63e"));
                 HttpSession session = req.getSession();
                 session.setAttribute("employee", employee);
@@ -69,7 +70,8 @@ public class LeaveRequestServlet extends HttpServlet {
             case "/leaveRequest/add":
                 createLeaveRequest(req, res);
                 break;
-            case "/leaveRequest/update":
+            case "/LeaveRequest/updateStatus":
+                updateStatus(req,res);
                 break;
             case "/leaveRequests":
                 break;
@@ -78,17 +80,40 @@ public class LeaveRequestServlet extends HttpServlet {
         }
     }
 
-        private void penidngLeaveRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-
+        private void leaveRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+            List<String> errors = new ArrayList<>();
+            try {
+              List<LeaveRequest> LeaveRequests =  leaveRequestService.getAllLeaveRequests();
+                req.setAttribute("leaveRequests", LeaveRequests);
+            } catch (RepoException e) {
+                errors.add(e.getMessage());
+            }
+            req.setAttribute("errors", errors);
+            req.getServletContext().getRequestDispatcher("/view/admin/leaveRequest.jsp").forward(req, res);
         }
+
+
+        private void updateStatus(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
+            List<String> errors = new ArrayList<>();
+            try {
+                StatusLeaveRequest newStatus = StatusLeaveRequest.valueOf(req.getParameter("status").toUpperCase());
+                String success = leaveRequestService.updateStatus(UUID.fromString(req.getParameter("requestId")),newStatus);
+                req.setAttribute("success",success);
+            } catch (RepoException e) {
+                errors.add(e.getMessage());
+            }
+            req.setAttribute("errors", errors);
+            req.getServletContext().getRequestDispatcher("/view/admin/leaveRequest.jsp").forward(req, res);
+        }
+
         private void createLeaveRequest(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         List<String> errors = new ArrayList<>();
-        String certificatePath = null; // Variable to hold the certificate path
+        String certificatePath = null;
 
         // Get the uploaded file part
         Part filePart = req.getPart("certificate");
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        String fileExtension = ""; // To store the file extension (e.g., .pdf)
+        String fileExtension = "";
 
         // Check if the file has an extension
         if (originalFileName.contains(".")) {

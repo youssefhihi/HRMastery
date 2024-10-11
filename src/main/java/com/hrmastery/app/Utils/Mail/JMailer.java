@@ -62,7 +62,7 @@ public class JMailer {
         email.addRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(emailRecipient));
 
         email.setSubject(subject);
-        email.setText(msg);
+        email.setContent(msg, "text/html; charset=utf-8");
 
         // Encode and wrap the MIME message into a gmail message
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();

@@ -119,6 +119,13 @@
                 <span id="cnssValid" class="error-message">Please enter a valid CNSS number.</span>
             </div>
 
+            <div class="form-group">
+                <label for="leaveBalance">Leave Balance:</label>
+                <input type="number" id="leaveBalance" name="leaveBalance">
+                <span id="leaveBalanceValid" class="error-message">Please enter a valid Leave Balance number.</span>
+            </div>
+
+
             <button type="submit" id="submit-btn">Save</button>
         </form>
     </div>

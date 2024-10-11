@@ -4,6 +4,7 @@ import com.hrmastery.app.Exceptions.RepoException;
 import com.hrmastery.app.Utils.Mail.JMailer;
 import com.hrmastery.app.Utils.Mail.MailMsg;
 import com.hrmastery.app.entity.LeaveRequest;
+import com.hrmastery.app.enums.StatusLeaveRequest;
 import com.hrmastery.app.repository.impl.LeaveRequestRepoImpl;
 import com.hrmastery.app.repository.inerfaces.LeaveRequestRepo;
 import com.hrmastery.app.service.interfaces.LeaveRequestService;
@@ -87,6 +88,23 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
                 return "LeaveRequest deleted successfully";
             }
         }catch (RepoException e) {
+            throw new RepoException(e.getMessage());
+        }
+        return null;
+    }
+
+    @Override
+    public String updateStatus(UUID leaveRequestId, StatusLeaveRequest newStatus) throws RepoException{
+        try{
+            Boolean isUpdated =  leaveRequestRepo.updateStatus(leaveRequestId, newStatus);
+            if(isUpdated){
+                LeaveRequest leaveRequest = leaveRequestRepo.findById(leaveRequestId).get();
+                new JMailer().sendEmail("Leave Request Answer", MailMsg.leaveRequestStatusEmail(leaveRequest),leaveRequest.getEmployee().getEmail());
+                return "LeaveRequest Status updated successfully";
+            }
+        }catch(RepoException e) {
+            throw new RepoException(e.getMessage());
+        } catch (Exception e) {
             throw new RepoException(e.getMessage());
         }
         return null;

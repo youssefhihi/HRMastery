@@ -22,18 +22,18 @@
             <span class="tooltip">Dashboard</span>
         </li>
         <li>
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/employees">
                 <i class="bx bx-user"></i>
-                <span class="links_name">User</span>
+                <span class="links_name">Employees</span>
             </a>
-            <span class="tooltip">User</span>
+            <span class="tooltip">Employees</span>
         </li>
         <li>
-            <a href="#">
+            <a href="${pageContext.request.contextPath}/leaveRequests">
                 <i class="bx bx-chat"></i>
-                <span class="links_name">Messages</span>
+                <span class="links_name">Leave Request</span>
             </a>
-            <span class="tooltip">Messages</span>
+            <span class="tooltip">Leave Request</span>
         </li>
         <li>
             <a href="#">

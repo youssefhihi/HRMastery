@@ -43,6 +43,7 @@ public class LeaveRequest {
         this.reason = reason;
         this.employee = employee;
     }
+    public LeaveRequest(){}
 
     public UUID getRequestId() {
         return requestId;

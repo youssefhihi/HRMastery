@@ -62,5 +62,38 @@ public class LeaveRequestRepoImpl extends RepoImpl<LeaveRequest> implements Leav
             }
         }
     }
+    @Override
+    public Boolean updateStatus(UUID leaveRequestId, StatusLeaveRequest newStatus) throws RepoException  {
+        EntityManager entityManager = null;
+        try {
+            entityManager = PersistenceManager.getEntityManager();
+            entityManager.getTransaction().begin();
+            String jpql = "SELECT lr FROM LeaveRequest lr WHERE lr.id = :leaveRequestId";
+            TypedQuery<LeaveRequest> query = entityManager.createQuery(jpql, LeaveRequest.class);
+            query.setParameter("leaveRequestId", leaveRequestId);
+            LeaveRequest leaveRequest = query.getSingleResult();
+            if (leaveRequest != null) {
+                leaveRequest.setStatus(newStatus);
+                entityManager.merge(leaveRequest);
+                entityManager.getTransaction().commit();
+
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new RepoException("Error updating leave request status: " + e.getMessage());
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+    }
+
+
+
 
 }

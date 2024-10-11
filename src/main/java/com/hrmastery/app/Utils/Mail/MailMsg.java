@@ -1,6 +1,7 @@
 package com.hrmastery.app.Utils.Mail;
 
 import com.hrmastery.app.entity.LeaveRequest;
+import com.hrmastery.app.enums.StatusLeaveRequest;
 
 public class MailMsg {
 
@@ -24,6 +25,25 @@ public class MailMsg {
                 "</body>" +
                 "</html>";
     }
+
+    public static String leaveRequestStatusEmail(LeaveRequest leaveRequest) {
+        return "<html>" +
+                "<body>" +
+                "<p>Dear " + leaveRequest.getEmployee().getName() + ",</p>" +
+                "<p>We would like to inform you that your leave request has been <strong>" + leaveRequest.getStatus().name() + "</strong>.</p>" +
+                "<ul>" +
+                "<li><strong>Employee Name:</strong> " + leaveRequest.getEmployee().getName() + "</li>" +
+                "<li><strong>Start Date:</strong> " + leaveRequest.getStartDate() + "</li>" +
+                "<li><strong>End Date:</strong> " + leaveRequest.getEndDate() + "</li>" +
+                "<li><strong>Duration:</strong> " + leaveRequest.getDuration() + " day(s)</li>" +
+                "<li><strong>Reason:</strong> " + leaveRequest.getReason() + "</li>" +
+                "</ul>" +
+                "<p>If you have any questions or need further clarification, please don't hesitate to contact us.</p>" +
+                "<p>Best regards,<br>HRMastery</p>" +
+                "</body>" +
+                "</html>";
+    }
+
 
 
 }
