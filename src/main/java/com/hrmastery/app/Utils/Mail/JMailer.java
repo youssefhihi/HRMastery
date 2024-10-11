@@ -30,7 +30,7 @@ import static com.google.api.services.gmail.GmailScopes.GMAIL_SEND;
 
 public class JMailer {
     static Dotenv dotenv = Dotenv.load();
-    private static  final String MAIL_SENDER = "workPal@gmail.com";
+    private static  final String MAIL_SENDER = "HRmastery@gmail.com";
     private final Gmail service;
 
     public JMailer() throws Exception {
@@ -84,16 +84,6 @@ public class JMailer {
                 throw e;
             }
         }
-    }
-    public static void main(String[] args) throws  Exception {
-        new JMailer().sendEmail("from emp mana", """
-    dear youssef
-    
-    hiiiiiiiiiiiiiii it works
-    
-    
-    """
-                ,"youssefhihi18@gmail.com" );
     }
 
 }
