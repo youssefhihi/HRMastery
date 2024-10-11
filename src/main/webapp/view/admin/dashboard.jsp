@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/style/admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/admin/style/admin.css">
     <link
             href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
             rel="stylesheet"
@@ -147,6 +147,11 @@
                 <label for="cnss">CNSS:</label>
                 <input type="text" id="cnss" name="cnss">
                 <span id="cnssValid" class="error-message">Please enter a valid CNSS number.</span>
+            </div>
+            <div class="form-group">
+                <label for="leaveBalance">Leave Balance:</label>
+                <input type="number" id="leaveBalance" name="leaveBalance">
+                <span id="leaveBalanceValid" class="error-message">Please enter a valid Leave Balance number.</span>
             </div>
 
             <button type="submit" id="submit-btn">Save</button>

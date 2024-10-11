@@ -2,7 +2,7 @@ package com.hrmastery.app.entity;
 
 import com.hrmastery.app.enums.StatusLeaveRequest;
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -10,12 +10,15 @@ import java.util.UUID;
 public class LeaveRequest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID requestId;
 
     @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDateTime startDate;
+
+
+    @Column(name = "duration")
+    private Integer duration;
 
     @Column(name = "certificate")
     private String certificate;
@@ -27,7 +30,21 @@ public class LeaveRequest {
     @Column(name = "reason")
     private String reason;
 
-    // Getters and Setters
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+
+    public LeaveRequest(LocalDateTime startDate, Integer duration, String certificate, StatusLeaveRequest status, String reason, Employee employee) {
+        this.startDate = startDate;
+        this.duration = duration;
+        this.certificate = certificate;
+        this.status = status;
+        this.reason = reason;
+        this.employee = employee;
+    }
+    public LeaveRequest(){}
+
     public UUID getRequestId() {
         return requestId;
     }
@@ -36,11 +53,11 @@ public class LeaveRequest {
         this.requestId = requestId;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
@@ -67,4 +84,25 @@ public class LeaveRequest {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public LocalDateTime getEndDate() {
+        return startDate.plusDays(duration);
+    }
+
 }

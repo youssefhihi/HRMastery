@@ -1,4 +1,4 @@
-package com.hrmastery.app.Utils.JMailler.Validation;
+package com.hrmastery.app.Utils.Validation;
 
 import com.hrmastery.app.Exceptions.RepoException;
 import com.hrmastery.app.entity.Employee;

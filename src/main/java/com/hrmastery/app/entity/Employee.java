@@ -4,6 +4,7 @@ import com.hrmastery.app.enums.Role;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -26,16 +27,51 @@ public class Employee extends User{
     @Column(name = "department" , nullable = false)
     private String department;
 
+    @Column(name = "leaveBalance" , nullable = false)
+    private Integer leaveBalance;
+
+    @OneToMany(mappedBy = "employee" , cascade = CascadeType.ALL)
+    private List<LeaveRequest> LeaveRequests;
+
+    @OneToMany(mappedBy = "employee" , cascade = CascadeType.ALL)
+    private List<HistoryUpdate> historyUpdates;
+
+
     public Employee() {}
 
-    public Employee(String name, String email, String address,String phoneNumber, Role role, Double salary, Integer numberOfChildren, String jobPosition, Date hireDate, String cnss ,String department) {
-        super(name, email, address,phoneNumber, role);
+    public Employee(String name, String email, String address, String phoneNumber, Role role, double salary, int numberOfChildren, String jobPosition, Date hireDate, String cnss, String department, Integer leaveBalance) {
+        super(name, email, address, phoneNumber, role);
         this.salary = salary;
         this.numberOfChildren = numberOfChildren;
         this.jobPosition = jobPosition;
         this.hireDate = hireDate;
-        this.cnss = cnss ;
+        this.cnss = cnss;
         this.department = department;
+        this.leaveBalance = leaveBalance;
+    }
+
+    public List<LeaveRequest> getLeaveRequests() {
+        return LeaveRequests;
+    }
+
+    public void setLeaveRequests(List<LeaveRequest> leaveRequests) {
+        LeaveRequests = leaveRequests;
+    }
+
+    public List<HistoryUpdate> getHistoryUpdates() {
+        return historyUpdates;
+    }
+
+    public void setHistoryUpdates(List<HistoryUpdate> historyUpdates) {
+        this.historyUpdates = historyUpdates;
+    }
+
+    public Integer getLeaveBalance() {
+        return leaveBalance;
+    }
+
+    public void setLeaveBalance(Integer leaveBalance) {
+        this.leaveBalance = leaveBalance;
     }
 
     public double getSalary() {
